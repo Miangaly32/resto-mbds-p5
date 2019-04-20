@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -16,7 +17,7 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -49,7 +50,7 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
-	 port:3000
+    port: 3000
   },
   performance: {
     hints: false
@@ -67,11 +68,15 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
+      "uglifyOptions":
+      {
+        compress: {
+          warnings: false
+        },
+        sourceMap: true
       }
-    }),
+    }
+    ),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
